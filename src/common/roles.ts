@@ -2,6 +2,7 @@ export enum Role {
   EMPLOYEE = 'EMPLOYEE',
   MANAGER = 'MANAGER',
   HR = 'HR',
+  WAREHOUSE = 'WAREHOUSE',
 }
 
 /** The user taken from the JWT and attached to the request by JwtAuthGuard. */

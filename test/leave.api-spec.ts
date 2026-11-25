@@ -1,5 +1,5 @@
 import { INestApplication } from '@nestjs/common';
-import { balanceOf, client, createApp, resetDatabase } from './helpers';
+import { balanceOf, client, closeApp, createApp, resetDatabase } from './helpers';
 
 // Dates far in the future, so "start date in the past" never triggers by accident.
 const WEEK = { type: 'ANNUAL', startDate: '2030-06-03', endDate: '2030-06-07' }; // Mon–Fri = 5 days
@@ -16,7 +16,7 @@ describe('Leave requests', () => {
     await resetDatabase(app);
     api.clearTokens();
   });
-  afterAll(() => app.close());
+  afterAll(() => closeApp(app));
 
   describe('creating a request', () => {
     it('creates a PENDING request and counts working days', async () => {

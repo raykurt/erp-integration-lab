@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { client, createApp, resetDatabase } from './helpers';
+import { client, closeApp, createApp, resetDatabase } from './helpers';
 
 describe('Authentication and authorization', () => {
   let app: INestApplication;
@@ -14,7 +14,7 @@ describe('Authentication and authorization', () => {
     await resetDatabase(app);
     api.clearTokens();
   });
-  afterAll(() => app.close());
+  afterAll(() => closeApp(app));
 
   it('returns a JWT for valid credentials', async () => {
     const res = await request(app.getHttpServer())
@@ -51,6 +51,6 @@ describe('Authentication and authorization', () => {
     expect((await api.as('mert').get('/employees')).status).toBe(403);
     const res = await api.as('hulya').get('/employees');
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(6);
+    expect(res.body).toHaveLength(7);
   });
 });

@@ -1,16 +1,17 @@
 {
   "name": "erp-integration-lab",
-  "version": "0.1.0",
-  "description": "Internal operations platform (leave management, later warehouse + ERP sync) built with NestJS and PostgreSQL, with a layered test suite.",
+  "version": "0.2.0",
+  "description": "Internal operations platform (leave management, warehouse, ERP sync) built with NestJS and PostgreSQL, with a layered test suite.",
   "private": true,
   "license": "MIT",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "start": "node dist/main.js",
-    "start:dev": "tsc -p tsconfig.build.json && node dist/main.js",
+    "start": "node dist/src/main.js",
+    "start:dev": "tsc -p tsconfig.build.json && node dist/src/main.js",
     "test": "jest",
     "test:api": "jest --config test/jest-api.config.js --runInBand",
-    "test:all": "npm test && npm run test:api"
+    "test:all": "npm test && npm run test:api",
+    "mock-erp": "tsc -p tsconfig.build.json && node dist/mock-erp/main.js"
   },
   "dependencies": {
     "@nestjs/common": "11.2.12",
