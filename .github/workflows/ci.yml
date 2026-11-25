@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: erplab
+          POSTGRES_USER: lab
+          POSTGRES_PASSWORD: lab
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U lab"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgres://lab:lab@localhost:5432/erplab
+      JWT_SECRET: ci-only-secret
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Type check and build
+        run: npm run build
+
+      - name: Unit tests (business rules, no database)
+        run: npm test
+
+      - name: API tests (real app + PostgreSQL)
+        run: npm run test:api
