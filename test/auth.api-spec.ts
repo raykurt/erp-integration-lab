@@ -54,3 +54,17 @@ describe('Authentication and authorization', () => {
     expect(res.body).toHaveLength(7);
   });
 });
+
+describe('Test support endpoint', () => {
+  it('is not available outside NODE_ENV=test', async () => {
+    const app = await createApp();
+    const previous = process.env.NODE_ENV;
+    process.env.NODE_ENV = 'production';
+    try {
+      await request(app.getHttpServer()).post('/test-support/reset').expect(404);
+    } finally {
+      process.env.NODE_ENV = previous;
+      await closeApp(app);
+    }
+  });
+});

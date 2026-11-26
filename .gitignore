@@ -2,3 +2,7 @@ node_modules/
 dist/
 coverage/
 .env
+.next/
+*.tsbuildinfo
+playwright-report/
+test-results/

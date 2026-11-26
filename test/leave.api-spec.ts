@@ -185,6 +185,11 @@ describe('Leave requests', () => {
     });
     it('shows HR everything', async () => expect(await ownersOf('hulya')).toEqual([4, 5, 6]));
 
+    it('includes only the employee name, no other personal data', async () => {
+      const [first] = (await api.as('mert').get('/leave-requests')).body;
+      expect(first.employee).toEqual({ id: 4, fullName: 'Ayşe Yılmaz' });
+    });
+
     it('filters by status', async () => {
       const res = await api.as('hulya').get('/leave-requests?status=APPROVED');
       expect(res.body).toEqual([]);

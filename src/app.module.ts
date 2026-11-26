@@ -8,6 +8,7 @@ import { ErpModule } from './erp/erp.module';
 import { LeaveRequest } from './leave/leave-request.entity';
 import { LeaveModule } from './leave/leave.module';
 import { SeedService } from './seed/seed.service';
+import { TestSupportController } from './seed/test-support.controller';
 import { Item, StockLevel, StockMovement, Warehouse } from './warehouse/entities';
 import { WarehouseModule } from './warehouse/warehouse.module';
 
@@ -28,6 +29,7 @@ import { WarehouseModule } from './warehouse/warehouse.module';
     WarehouseModule,
     ErpModule,
   ],
+  controllers: [TestSupportController],
   providers: [SeedService],
 })
 export class AppModule {}

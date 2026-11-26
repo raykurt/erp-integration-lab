@@ -59,6 +59,7 @@ export class LeaveService {
     const qb = this.requests
       .createQueryBuilder('r')
       .innerJoin('r.employee', 'e')
+      .addSelect(['e.id', 'e.fullName']) // names for the manager/HR view, nothing else about the employee
       .orderBy('r.startDate', 'ASC')
       .addOrderBy('r.id', 'ASC');
 
